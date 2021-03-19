@@ -31,6 +31,6 @@ public:
 	Point operator-(Point& p);
 	Point& operator=(const Point& p);
 
-	friend std::ostream& operator<<(std::ostream& os, Point& p);
+	friend std::ostream& operator<<(std::ostream& os, const Point& p);
 };
 

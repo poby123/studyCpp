@@ -41,7 +41,7 @@ Point::Point(const Point& p)
 // Destructor
 Point::~Point()
 {
-	std::cout << "[소멸자] " << name << "Point 기본 소멸자가 호출되었습니다\n";
+	std::cout << "[소멸자] " << name << " Point 기본 소멸자가 호출되었습니다\n";
 
 	delete[] name;
 	name = nullptr;
@@ -72,7 +72,7 @@ Point Point::operator+(Point& p)
 
 	Point ret(this->x + p.x, this->y + p.y, temp);
 
-	return ret; // call by value에서 return 시 복사 생성자가 호출된다.
+	return ret; // 객체를 return 시 임시 객체를 만들기 위해 복사 생성자가 호출된다.
 }
 
 Point Point::operator-(Point& p)
@@ -82,25 +82,27 @@ Point Point::operator-(Point& p)
 	strcat(temp, "-");
 	strcat(temp, p.name);
 
-	Point ret(this->x - p.x, this->y - p.y, name);
+	Point ret(this->x - p.x, this->y - p.y, temp);
 
-	return ret; // call by value에서 return 시 복사 생성자가 호출된다.
+	return ret; // 객체를 return 시 임시 객체를 만들기 위해 복사 생성자가 호출된다.
 }
 
 Point& Point::operator=(const Point& p) {
 	std::cout << "[연산자] 대입 연산자가 호출되었습니다\n";
 
-	delete[] this->name;
-	this->name = new char[strlen(p.name) + 1];
-	strcpy(this->name, p.name);
+	if (this != &p) {
+		delete[] this->name; // 복사 대입 연산자에서는 delete 를 해줘야한다.
 
-	this->x = p.x;
-	this->y = p.y;
+		this->name = new char[strlen(p.name) + 1];
+		strcpy(this->name, p.name);
 
+		this->x = p.x;
+		this->y = p.y;
+	}
 	return *this;
 }
 
-std::ostream& operator<<(std::ostream& os, Point& p)
+std::ostream& operator<<(std::ostream& os, const Point& p)
 {
 	os << "Point[" << p.name << "] : (" << p.x << ", " << p.y << ")" << std::endl;
 	return os;
