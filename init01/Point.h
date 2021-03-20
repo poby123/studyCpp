@@ -18,6 +18,9 @@ public:
 	// Copy Constructor
 	Point(const Point& p);
 
+	// Move Constructor
+	Point(Point&& p) noexcept;
+
 	// Destructor
 	~Point();
 
@@ -30,6 +33,7 @@ public:
 	Point operator+(Point& p);
 	Point operator-(Point& p);
 	Point& operator=(const Point& p);
+	Point& operator=(Point&& p) noexcept;
 
 	friend std::ostream& operator<<(std::ostream& os, const Point& p);
 };

@@ -45,7 +45,7 @@ int main() {
 
 	// - 오버로딩
 	Point result2;
-	result2 = p3 - p4; // 대입연산자 호출
+	result2 = p3 - p4;
 	cout << result2 << "\n";
 
 	cout << "\n\n========== 소멸자 호출 =========\n";
